@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
@@ -65,7 +64,7 @@ function ExpensesOverview(){
 export default function App() {
   return (
       <>
-        <StatusBar style="auto"/>
+        <StatusBar style="light"/>
         <ExpensesContextProvider>
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{
@@ -91,7 +90,3 @@ export default function App() {
       </>
   );
 }
-
-const styles = StyleSheet.create({
-
-});

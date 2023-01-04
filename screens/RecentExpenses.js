@@ -13,7 +13,7 @@ function RecentExpenses(){
         return (date > date7DaysAgo2) && (date <= today);
     })
     return (
-        <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 Days"/>
+        <ExpensesOutput expenses={recentExpenses} expensesPeriod="Last 7 Days" fallbackText="No express registered fo the last 7 days."/>
     );
 }
 
