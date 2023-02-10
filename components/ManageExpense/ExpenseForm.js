@@ -2,12 +2,13 @@ import Input from "./Input";
 import {View, StyleSheet, Text} from "react-native";
 import {useState} from "react";
 import Button from "../UI/Button";
+import {getFormattedDate} from "../../util/date";
 
-function ExpenseForm({submitButtonLabel, onCancel, onSubmit}){
+function ExpenseForm({submitButtonLabel, onCancel, onSubmit, defaultValues}){
     const [inputValues, setInputValues] = useState({
-        amount: '',
-        date: '',
-        description: ''
+        amount: defaultValues ? defaultValues.amount.toString() : '',
+        date: defaultValues ? getFormattedDate(defaultValues.date) : '',
+        description: defaultValues ? defaultValues.description : ''
     });
 
     function inputChangeHandler(inputIdentifier, enteredValue){
@@ -20,7 +21,12 @@ function ExpenseForm({submitButtonLabel, onCancel, onSubmit}){
     }
 
     function submitHandler() {
-
+        const expenseData = {
+            amount: +inputValues.amount, //il + permette di convertire la stringa in un numero
+            date: new Date(inputValues.date),
+            description: inputValues.description
+        };
+        onSubmit(expenseData);
     }
 
     return(
@@ -45,7 +51,7 @@ function ExpenseForm({submitButtonLabel, onCancel, onSubmit}){
                 onChangeText: inputChangeHandler.bind(this, 'description'), //il valore verrà passato in automatico sull'attributo enteredValue
                 value: inputValues.description
                 // autoCorrect: false, //true di default
-                // autoCapitalize: 'words', //sentences di default
+                // autoCapitalize: 'words', //sentences è di default
             }}/>
             <View style={styles.buttons}>
                 <Button style={styles.button} mode="flat" onPressButton={onCancel}>Cancel</Button>
