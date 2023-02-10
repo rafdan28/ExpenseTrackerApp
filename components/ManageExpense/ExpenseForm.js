@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, Alert} from "react-native";
 import {useState} from "react";
 import Button from "../UI/Button";
 import {getFormattedDate} from "../../util/date";
+import {GlobalStyles} from "../../constants/styles";
 
 function ExpenseForm({submitButtonLabel, onCancel, onSubmit, defaultValues}){
     const [inputs, setInputs] = useState({
@@ -61,27 +62,38 @@ function ExpenseForm({submitButtonLabel, onCancel, onSubmit, defaultValues}){
         <View style={styles.form}>
             <Text style={styles.title}>Your Expense</Text>
             <View style={styles.inputsRow}>
-                <Input style={styles.rowInput} label="Amount" textInputConfig={{
+                <Input
+                    style={styles.rowInput}
+                    label="Amount"
+                    invalid={!inputs.amount.isValid}
+                    textInputConfig={{
                     keyboardType: 'decimal-pad',
                     onChangeText: inputChangeHandler.bind(this, 'amount'), //il valore verrà passato in automatico sull'attributo enteredValue
                     value: inputs.amount.value
                 }}/>
 
-                <Input style={styles.rowInput} label="Date" textInputConfig={{
+                <Input
+                    style={styles.rowInput}
+                    label="Date"
+                    invalid={!inputs.date.isValid}
+                    textInputConfig={{
                     placeholder: 'YYYY-MM-DD',
                     maxLength: 10,
                     onChangeText: inputChangeHandler.bind(this, 'date'), //il valore verrà passato in automatico sull'attributo enteredValue
                     value: inputs.date.value
                 }}/>
             </View>
-            <Input label="Description" textInputConfig={{
+            <Input
+                label="Description"
+                invalid={!inputs.description.isValid}
+                textInputConfig={{
                 multiline: true,
                 onChangeText: inputChangeHandler.bind(this, 'description'), //il valore verrà passato in automatico sull'attributo enteredValue
                 value: inputs.description.value
                 // autoCorrect: false, //true di default
                 // autoCapitalize: 'words', //sentences è di default
             }}/>
-            {formIsInvalid && <Text> Invalid input values </Text>}
+            {formIsInvalid && <Text style={styles.errorText}> Invalid input values </Text>}
             <View style={styles.buttons}>
                 <Button style={styles.button} mode="flat" onPressButton={onCancel}>Cancel</Button>
                 <Button style={styles.button} onPressButton={submitHandler}>{submitButtonLabel}</Button>
@@ -109,6 +121,11 @@ const styles = StyleSheet.create({
     },
     rowInput: {
         flex: 1
+    },
+    errorText: {
+        textAlign: 'center',
+        color: GlobalStyles.colors.error500,
+        margin: 8
     },
     buttons: {
         flexDirection: "row",
