@@ -12,7 +12,7 @@ function Input({label, style, textInputConfig}){
     return(
         <View style={[styles.inputContainer, style]}>
             <Text style={styles.label}>{label}</Text>
-            <TextInput style={styles.input} {...textInputConfig} />
+            <TextInput style={styles.input} {...textInputConfig}/>
         </View>
     )
 }
